@@ -6,7 +6,7 @@
 /*   By: jagan <jagan@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 17:46:18 by jagan             #+#    #+#             */
-/*   Updated: 2026/04/04 04:45:02 by jagan            ###   ########.fr       */
+/*   Updated: 2026/04/04 05:18:11 by jagan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	sb(t_stack *b)
 	temp = first->value;
 	first->value = second->value;
 	second->value = temp;
+	print("sb\n");
 }
 
 // ss: sa and sb at the same time
@@ -50,6 +51,7 @@ void	ss(t_stack *a, t_stack *b)
 {
 	sa(a);
 	sb(b);
+	printf("ss\n");
 }
 
 //pa: Take the first element at the top of b and put it at the top of a
@@ -61,6 +63,7 @@ void	pa(t_stack *a, t_stack *b)
 	if (!node)
 		return ;
 	push_node(a, node);
+	printf("pa\n");
 }
 
 //pb: Take the first element at the top of a and put it at the top of b
@@ -72,4 +75,5 @@ void	pb(t_stack *a, t_stack *b)
 	if (!node)
 		return ;
 	push_node(b, node);
+	printf("pb\n");
 }

@@ -6,7 +6,7 @@
 /*   By: jagan <jagan@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:22:20 by jagan             #+#    #+#             */
-/*   Updated: 2026/04/02 09:48:12 by jagan            ###   ########.fr       */
+/*   Updated: 2026/04/04 05:18:02 by jagan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ra(t_stack *a)
 	current->next = first;
 	first->next = NULL;
 	a->top = a->top;
+	printf("ra\n");
 }
 
 //rb: Shift up all elements of stack b by 1. The first element becomes the last one.
@@ -48,6 +49,7 @@ void	rb(t_stack *b)
 	current->next = first;
 	first->next = NULL;
 	b->top = b->top;
+	printf("rb\n");
 }//为什么在最后还要写两次b->top?什么作用？
 
 // rr: ra and rb at the same time
@@ -55,6 +57,7 @@ void	rr(t_stack *a, t_stack *b)
 {
 	ra(a);
 	rb(b);
+	printf("rr\n");
 }
 
 //rra: Shift down all elements of stack a by 1. The last element becomes the first one.
@@ -75,6 +78,7 @@ void	rra(t_stack *a)
 	second_last->next = NULL;
 	current->next = a->top;
 	a->top = current;
+	printf("rra\n");
 }//不明白line75,76,77, explain line 69
 
 //rrb: Shift down all elements of stack b by 1. The last element becomes the  first one.
@@ -95,6 +99,7 @@ void	rrb(t_stack *b)
 	second_last->next = NULL;
 	current->next = b->top;
 	b->top = current;
+	printf("rrb\n");
 }
 
 //rrr: rra and rrb at the same time
@@ -102,4 +107,5 @@ void	rrr(t_stack *a, t_stack *b)
 {
 	rra(a);
 	rrb(b);
+	printf("rrr\n");
 }
