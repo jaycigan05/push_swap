@@ -12,10 +12,13 @@
 
 NAME		=	push_swap
 BONUS_NAME	=	checker
-
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror -I includes
+CFLAGS		=	-Wall -Wextra -Werror -Iincludes
 RM			=	rm -f
+
+# CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+# INCLUDES = -Iincludes
+
 
 SRCS		=	srcs/main.c \
 				srcs/parse.c \
@@ -33,15 +36,20 @@ SRCS		=	srcs/main.c \
 				srcs/sort_large_move.c \
 				srcs/sort_large.c \
 				srcs/sort_small.c \
-				srcs/sort.c
+				srcs/sort.c \
+				srcs/sort_large_lis.c \
+				srcs/sort_large_lis_core.c \
 
 BONUS_SRCS	=	srcs/checker_bonus.c \
+				srcs/checker_exec_bonus.c \
 				srcs/checker_utils_bonus.c \
 				srcs/parse.c \
 				srcs/utils.c \
 				srcs/utils2.c \
 				srcs/stack_ops.c \
-				srcs/rotate_ops.c
+				srcs/rotate_ops.c \
+				srcs/sort_large_lis.c \
+				srcs/sort_large_lis_core.c \
 
 OBJS		=	$(SRCS:.c=.o)
 BONUS_OBJS	=	$(BONUS_SRCS:.c=.o)

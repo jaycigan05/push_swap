@@ -5,126 +5,91 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jagan <jagan@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/30 16:00:00 by jagan             #+#    #+#             */
-/*   Updated: 2026/04/30 11:43:47 by jagan            ###   ########.fr       */
+/*   Created: 2026/04/30 12:38:43 by jagan             #+#    #+#             */
+/*   Updated: 2026/04/30 12:41:07 by jagan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static t_node	**copy_stack_nodes(t_stack *a)
+static void	do_rr_rrr(t_stack *a, t_stack *b, int *ca, int *cb)
 {
-	t_node	**nodes;
-	t_node	*current;
-	int		size;
-	int		i;
-
-	size = a->size;
-	nodes = (t_node **)malloc(sizeof(t_node *) * size);
-	if (!nodes)
-		return (NULL);
-	current = a->top;
-	i = 0;
-	while (i < size)
+	while (*ca > 0 && *cb > 0)
 	{
-		nodes[i] = current;
-		current = current->next;
-		i++;
+		rr(a, b);
+		(*ca)--;
+		(*cb)--;
 	}
-	return (nodes);
-}
-
-static void	init_lis_arrays(int *dp, int *prev, int size)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
+	while (*ca < 0 && *cb < 0)
 	{
-		dp[i] = 1;
-		prev[i] = -1;
-		i++;
+		rrr(a, b);
+		(*ca)++;
+		(*cb)++;
 	}
 }
 
-static void	fill_lis_data(t_node **nodes, int *dp, int *prev, int size,
-	int *best_end)
+static void	do_ra_rra(t_stack *a, int *ca)
 {
-	int	i;
-	int	j;
-	int	best_length;
-
-	i = 0;
-	best_length = 0;
-	while (i < size)
+	while (*ca > 0)
 	{
-		j = 0;
-		while (j < i)
+		ra(a);
+		(*ca)--;
+	}
+	while (*ca < 0)
+	{
+		rra(a);
+		(*ca)++;
+	}
+}
+
+static void	do_rb_rrb(t_stack *b, int *cb)
+{
+	while (*cb > 0)
+	{
+		rb(b);
+		(*cb)--;
+	}
+	while (*cb < 0)
+	{
+		rrb(b);
+		(*cb)++;
+	}
+}
+
+void	apply_rotations_and_push(t_stack *a, t_stack *b,
+	int ca, int cb)
+{
+	do_rr_rrr(a, b, &ca, &cb);
+	do_ra_rra(a, &ca);
+	do_rb_rrb(b, &cb);
+	pa(a, b);
+}
+
+void	rotate_a_to_min(t_stack *a)
+{
+	t_node	*cur;
+	int		pos;
+	int		min_pos;
+	int		min;
+
+	cur = a->top;
+	pos = 0;
+	min_pos = 0;
+	min = INT_MAX;
+	while (cur)
+	{
+		if (cur->index < min)
 		{
-			if (nodes[j]->index < nodes[i]->index && dp[j] + 1 > dp[i])
-			{
-				dp[i] = dp[j] + 1;
-				prev[i] = j;
-			}
-			j++;
+			min = cur->index;
+			min_pos = pos;
 		}
-		if (dp[i] > best_length)
-		{
-			best_length = dp[i];
-			*best_end = i;
-		}
-		i++;
+		cur = cur->next;
+		pos++;
 	}
-}
-
-static t_node	**extract_lis_nodes(t_node **nodes, int *prev, int best_end,
-	int size, int *lis_size)
-{
-	t_node	**lis;
-	int		length;
-	int		i;
-
-	lis = (t_node **)malloc(sizeof(t_node *) * size);
-	if (!lis)
-		return (NULL);
-	length = 0;
-	i = best_end;
-	while (i != -1)
-	{
-		lis[length] = nodes[i];
-		length++;
-		i = prev[i];
-	}
-	*lis_size = length;
-	return (lis);
-}
-
-t_node	**build_lis_set(t_stack *a, int *lis_size)
-{
-	t_node	**nodes;
-	t_node	**lis;
-	int		*dp;
-	int		*prev;
-	int		best_end;
-
-	nodes = copy_stack_nodes(a);
-	if (!nodes)
-		return (NULL);
-	dp = (int *)malloc(sizeof(int) * a->size);
-	prev = (int *)malloc(sizeof(int) * a->size);
-	if (!dp || !prev)
-	{
-		free(nodes);
-		free(dp);
-		free(prev);
-		return (NULL);
-	}
-	init_lis_arrays(dp, prev, a->size);
-	best_end = 0;
-	fill_lis_data(nodes, dp, prev, a->size, &best_end);
-	lis = extract_lis_nodes(nodes, prev, best_end, a->size, lis_size);
-	free(nodes);
-	free(dp);
-	free(prev);
-	return (lis);
+	if (min_pos <= a->size / 2)
+		while (min_pos-- > 0)
+			ra(a);
+	else
+		while (min_pos++ < a->size)
+			rra(a);
 }

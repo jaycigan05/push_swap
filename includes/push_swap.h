@@ -6,7 +6,7 @@
 /*   By: jagan <jagan@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 14:39:38 by jagan             #+#    #+#             */
-/*   Updated: 2026/04/30 11:47:25 by jagan            ###   ########.fr       */
+/*   Updated: 2026/04/30 12:45:44 by jagan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,28 @@ typedef struct s_stack
 	t_node	*top;
 	int		size;
 }	t_stack;
+
+typedef struct s_move
+{
+	int	index;
+	int	position;
+	int	cost_a;
+	int	cost_b;
+}	t_move;
+
+typedef struct s_lis
+{
+	t_node	**nodes;
+	int		*dp;
+	int		*prev;
+	int		size;
+	int		best_end;
+}	t_lis;
+
+t_node	**build_lis_set(t_stack *a, int *lis_size);
+void	apply_rotations_and_push(t_stack *a, t_stack *b,
+			int cost_a, int cost_b);
+void	rotate_a_to_min(t_stack *a);
 
 /* parse */
 t_stack	*parse_args(int argc, char **argv);
@@ -86,5 +108,13 @@ int		is_sorted(t_stack *a);
 /* checker bonus utils */
 char	*ft_strncpy(char *dest, char *src, int n);
 char	*read_line(void);
+
+/*checker exec.*/
+int		execute_operation(t_stack *a, t_stack *b, char *op);
+
+t_node	**copy_stack_nodes(t_stack *a);
+void	init_lis_arrays(t_lis *lis);
+void	compute_lis(t_lis *lis);
+t_node	**extract_lis(t_lis *lis, int *size);
 
 #endif
