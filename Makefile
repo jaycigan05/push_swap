@@ -4,40 +4,62 @@
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: jagan <jagan@student.42kl.edu.my>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2026/03/22 15:08:56 by jagan             #+#    #+#              #
-#    Updated: 2026/03/22 15:17:19 by jagan            ###   ########.fr        #
+#                                                +#+#+#+#+#+   +#+             #
+#    Created: 2026/03/22 10:10:10 by jagan            #+#    #+#              #
+#    Updated: 2026/04/30 14:00:00 by jagan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = push_swap
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
-RM = rm -f
+NAME		=	push_swap
+BONUS_NAME	=	checker
 
-SRCS = srcs/main.c \
-		srcs/parse.c \
-		srcs/stack.ops.c \
-		srcs/rotate_ops.c \
-		srcs/sort.c \
-		srcs/utils.c
+CC			=	cc
+CFLAGS		=	-Wall -Wextra -Werror -I includes
+RM			=	rm -f
 
-OBJS = $(SRCS:.c=.o)
+SRCS		=	srcs/main.c \
+				srcs/parse.c \
+				srcs/utils.c \
+				srcs/utils2.c \
+				srcs/stack_ops.c \
+				srcs/push_ops.c \
+				srcs/rotate_ops.c \
+				srcs/rotate_wrap.c \
+				srcs/rrotate_wrap.c \
+				srcs/sort_utils.c \
+				srcs/sort_small.c \
+				srcs/sort.c
 
-all:	$(NAME)
+BONUS_SRCS	=	srcs/checker_bonus.c \
+				srcs/checker_utils_bonus.c \
+				srcs/parse.c \
+				srcs/utils.c \
+				srcs/utils2.c \
+				srcs/stack_ops.c \
+				srcs/rotate_ops.c
+
+OBJS		=	$(SRCS:.c=.o)
+BONUS_OBJS	=	$(BONUS_SRCS:.c=.o)
+
+all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-%.o:	%.c
+bonus: $(BONUS_NAME)
+
+$(BONUS_NAME): $(BONUS_OBJS)
+	$(CC) $(CFLAGS) $(BONUS_OBJS) -o $(BONUS_NAME)
+
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(BONUS_OBJS)
 
-fclean:
-	$(RM) $(NAME)
+fclean: clean
+	$(RM) $(NAME) $(BONUS_NAME)
 
-re:	fclean all
+re: fclean all
 
-.PHONY:	all clean fclean re
+.PHONY: all bonus clean fclean re

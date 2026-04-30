@@ -1,40 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   push_ops.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jagan <jagan@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/04 04:24:42 by jagan             #+#    #+#             */
-/*   Updated: 2026/04/30 10:40:41 by jagan            ###   ########.fr       */
+/*   Created: 2026/04/30 14:00:00 by jagan             #+#    #+#             */
+/*   Updated: 2026/04/30 10:44:38 by jagan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	main(int argc, char **argv)
+void	pa(t_stack *a, t_stack *b)
 {
-	t_stack	*stack_a;
-	t_stack	*stack_b;
+	t_node	*node;
 
-	if (argc < 2)
-		return (0);
-	stack_a = parse_args(argc, argv);
-	if (!stack_a)
-	{
-		print_error();
-		return (1);
-	}
-	stack_b = init_stack();
-	if (!stack_b)
-	{
-		free_stack(stack_a);
-		print_error();
-		return (1);
-	}
-	if (!is_sorted(stack_a))
-		sort_stacks(stack_a, stack_b);
-	free_stack(stack_a);
-	free_stack(stack_b);
-	return (0);
+	node = pop_node(b);
+	if (!node)
+		return ;
+	push_node(a, node);
+	write(1, "pa\n", 3);
+}
+
+void	pb(t_stack *a, t_stack *b)
+{
+	t_node	*node;
+
+	node = pop_node(a);
+	if (!node)
+		return ;
+	push_node(b, node);
+	write(1, "pb\n", 3);
 }
