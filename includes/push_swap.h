@@ -6,7 +6,7 @@
 /*   By: jagan <jagan@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 14:39:38 by jagan             #+#    #+#             */
-/*   Updated: 2026/04/30 10:45:19 by jagan            ###   ########.fr       */
+/*   Updated: 2026/04/30 11:47:25 by jagan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,17 @@ void	sort_three(t_stack *a);
 void	sort_four(t_stack *a, t_stack *b);
 void	sort_five(t_stack *a, t_stack *b);
 void	sort_stacks(t_stack *a, t_stack *b);
+void	sort_large(t_stack *a, t_stack *b);
+void	move_best_node(t_stack *a, t_stack *b);
+void	rotate_a_to_min(t_stack *a);
 void	assign_index(t_stack *a);
 int		get_max_bits(t_stack *a);
 void	push_min_to_b(t_stack *a, t_stack *b, int target);
+int		is_node_in_set(t_node *node, t_node **set, int set_size);
+t_node	**build_lis_set(t_stack *a, int *lis_size);
+int		get_insert_position(t_stack *a, int index);
+int		get_rotation_cost(int position, int size);
+int		get_total_cost(int cost_a, int cost_b);
 
 /* utils */
 t_stack	*init_stack(void);

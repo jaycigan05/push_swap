@@ -6,7 +6,7 @@
 /*   By: jagan <jagan@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:22:20 by jagan             #+#    #+#             */
-/*   Updated: 2026/04/30 10:43:47 by jagan            ###   ########.fr       */
+/*   Updated: 2026/04/30 11:45:34 by jagan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@ void	do_rotate_a(t_stack *a)
 
 	if (!a || a->size < 2)
 		return ;
-	first = pop_node(a);
-	if (!first)
-		return ;
+	first = a->top;
+	a->top = first->next;
+	first->next = NULL;
 	current = a->top;
 	while (current->next)
 		current = current->next;
 	current->next = first;
-	first->next = NULL;
 }
 
 void	do_rotate_b(t_stack *b)
@@ -36,14 +35,13 @@ void	do_rotate_b(t_stack *b)
 
 	if (!b || b->size < 2)
 		return ;
-	first = pop_node(b);
-	if (!first)
-		return ;
+	first = b->top;
+	b->top = first->next;
+	first->next = NULL;
 	current = b->top;
 	while (current->next)
 		current = current->next;
 	current->next = first;
-	first->next = NULL;
 }
 
 void	do_rrotate_a(t_stack *a)

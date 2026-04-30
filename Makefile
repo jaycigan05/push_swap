@@ -27,6 +27,11 @@ SRCS		=	srcs/main.c \
 				srcs/rotate_wrap.c \
 				srcs/rrotate_wrap.c \
 				srcs/sort_utils.c \
+				srcs/sort_lis_utils.c \
+				srcs/sort_cost_utils.c \
+				srcs/sort_large_utils.c \
+				srcs/sort_large_move.c \
+				srcs/sort_large.c \
 				srcs/sort_small.c \
 				srcs/sort.c
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.c                                          :+:      :+:    :+:   */
+/*   checker_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jagan <jagan@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:00:00 by jagan             #+#    #+#             */
-/*   Updated: 2026/04/30 10:46:04 by jagan            ###   ########.fr       */
+/*   Updated: 2026/04/30 11:45:34 by jagan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,25 @@ static int	run_checker(t_stack *a, t_stack *b)
 	return (0);
 }
 
+static int	init_checker(t_stack **stack_a, t_stack **stack_b, int argc,
+	char **argv)
+{
+	*stack_a = parse_args(argc, argv);
+	if (!*stack_a)
+	{
+		print_error();
+		return (0);
+	}
+	*stack_b = init_stack();
+	if (!*stack_b)
+	{
+		free_stack(*stack_a);
+		print_error();
+		return (0);
+	}
+	return (1);
+}
+
 int	main(int argc, char **argv)
 {
 	t_stack	*stack_a;
@@ -109,19 +128,8 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 		return (0);
-	stack_a = parse_args(argc, argv);
-	if (!stack_a)
-	{
-		print_error();
+	if (!init_checker(&stack_a, &stack_b, argc, argv))
 		return (1);
-	}
-	stack_b = init_stack();
-	if (!stack_b)
-	{
-		free_stack(stack_a);
-		print_error();
-		return (1);
-	}
 	if (run_checker(stack_a, stack_b))
 		return (1);
 	if (is_sorted(stack_a) && stack_b->size == 0)

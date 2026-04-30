@@ -6,7 +6,7 @@
 /*   By: jagan <jagan@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 10:51:09 by jagan             #+#    #+#             */
-/*   Updated: 2026/04/30 10:40:30 by jagan            ###   ########.fr       */
+/*   Updated: 2026/04/30 11:45:34 by jagan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,26 @@ static int	has_duplicates(t_stack *stack)
 	return (0);
 }
 
+static int	append_arg(t_stack *stack, char *arg)
+{
+	t_node	*node;
+	long	value;
+
+	if (!is_valid_integer(arg))
+		return (0);
+	value = ft_atol(arg);
+	if (value < INT_MIN || value > INT_MAX)
+		return (0);
+	node = create_node((int)value);
+	if (!node)
+		return (0);
+	push_node(stack, node);
+	return (1);
+}
+
 t_stack	*parse_args(int argc, char **argv)
 {
 	t_stack	*stack;
-	t_node	*node;
-	long	value;
 	int		i;
 
 	stack = (t_stack *)malloc(sizeof(t_stack));
@@ -90,24 +105,11 @@ t_stack	*parse_args(int argc, char **argv)
 	i = argc - 1;
 	while (i > 0)
 	{
-		if (!is_valid_integer(argv[i]))
+		if (!append_arg(stack, argv[i]))
 		{
 			free_stack(stack);
 			return (NULL);
 		}
-		value = ft_atol(argv[i]);
-		if (value < INT_MIN || value > INT_MAX)
-		{
-			free_stack(stack);
-			return (NULL);
-		}
-		node = create_node((int)value);
-		if (!node)
-		{
-			free_stack(stack);
-			return (NULL);
-		}
-		push_node(stack, node);
 		i--;
 	}
 	if (has_duplicates(stack))
